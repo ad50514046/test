@@ -17,7 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout 初始化环境
+    
+    - name: Checkout # 初始化环境
       uses: actions/checkout@main
       
     - name: download 下载Openwrt
@@ -25,4 +26,6 @@ jobs:
         git clone $OPENWRT_SOURCE_URL openwrt
         cd openwrt
         ls
+    - name: 测试
+      run: ls
       
