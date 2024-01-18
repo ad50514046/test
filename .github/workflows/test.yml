@@ -36,12 +36,12 @@ jobs:
         #sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-latest)  # 安装服务器中所有的apt
         #sudo -E apt-get -qq autoremove --purge  # 删除没用的依赖
         #sudo -E apt-get -qq clean  # 清除依赖包
-        #sudo timedatectl set-timezone "$TZ"  # 设置时区调用TZ变量
-        #sudo mkdir -p /workdir # 根目录下创建workdir文件夹
-        #sudo chown $USER:$GROUPS /workdir  # 修改workdir的用户和用户组
+        sudo timedatectl set-timezone "$TZ"  # 设置时区调用TZ变量
+        sudo mkdir -p /workdir # 根目录下创建workdir文件夹
+        sudo chown $USER:$GROUPS /workdir  # 修改workdir的用户和用户组
       
     - name: 下载OpenWRT
-      #working-directory: /workdir
+      working-directory: /workdir
       run: |
         df -hT $PWD  # 查询硬盘大小
         $GET_CLONE_URL openwrt # 下载openwrt到openwrt文件夹中
@@ -59,7 +59,7 @@ jobs:
         cd openwrt 
         ./scripts/feeds update -a  # 文件升级
         ./scripts/feeds install -a  # 文件安装
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config # 复制.config文件
+        #[ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config # 复制.config文件
 
     - name: 执行DIY2文件
       run: |
