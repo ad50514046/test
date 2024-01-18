@@ -1,0 +1,13 @@
+
+name: test2
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      
+      - name: 读取本地仓库测试
+        [ -e .config ] && mv .config .config
+        run: ls
