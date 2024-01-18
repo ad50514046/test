@@ -1,4 +1,3 @@
-
 name: test2
 on: workflow_dispatch
 
@@ -9,5 +8,7 @@ jobs:
       - uses: actions/checkout@main
       
       - name: 读取本地仓库测试
-        [ -e .config ] && mv .config .config
-        run: ls
+        run: |
+          [ -e .config ] && mv .config .config
+          ls
+        
