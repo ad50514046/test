@@ -44,7 +44,8 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD  # 查询硬盘大小
-        git clone $REPO_URL openwrt  # 下载openwrt到openwrt文件夹中
+        # 下载openwrt到openwrt文件夹中
+        git clone $REPO_URL openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt  # 创建软连接
         
     - name: 执行DIY1文件
