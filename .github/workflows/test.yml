@@ -6,8 +6,7 @@ name: Build OpenWrt  # Build OpenWrt可以变跟自己喜欢的。
 on: workflow_dispatch
 
 env:  # 设定环境变量区
-  # OpenWRT的下载链接。精确到那个分支：url -b openwrt-版本号
-  REPO_URL: git clone https://github.com/openwrt/openwrt.git
+  REPO_URL: https://github.com/openwrt/openwrt.git  # OpenWRT的下载链接。精确到那个分支：url -b openwrt-版本号
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   # =============================
@@ -44,8 +43,7 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD  # 查询硬盘大小
-        # 下载openwrt到openwrt文件夹中
-        git clone $REPO_URL openwrt
+        git clone $REPO_URL openwrt # 下载openwrt到openwrt文件夹中
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt  # 创建软连接
         
     - name: 执行DIY1文件
