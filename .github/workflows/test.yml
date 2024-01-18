@@ -2,6 +2,7 @@ name: My OpenWrt
 
 on:
   repository_dispatch:
+  workflow_dispatch:
 
 env:
   REPO_URL: https://github.com/istoreos/istoreos.git  #
