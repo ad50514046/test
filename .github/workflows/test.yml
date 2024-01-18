@@ -10,5 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
       
-      - name: 说声你好
-        run: echo $AAA
+      - name: 创建文件
+        run: |
+          mkdir aaaa
+          
