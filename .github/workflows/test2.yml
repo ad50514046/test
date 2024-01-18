@@ -9,6 +9,6 @@ jobs:
       
       - name: 读取本地仓库测试
         run: |
-          [ -e .config ] && mv .config .config
+          mv [ -e .config ] .config
           ls
         
