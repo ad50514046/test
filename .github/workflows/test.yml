@@ -12,4 +12,5 @@ jobs:
         run: |
           mkdir aaa
           touch ./aaa/abcd
+          echo '你好' > ./aaa/abcd
           cat ./aaa/abcd
