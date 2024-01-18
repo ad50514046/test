@@ -6,7 +6,8 @@ name: Build OpenWrt  # Build OpenWrt可以变跟自己喜欢的。
 on: workflow_dispatch
 
 env:  # 设定环境变量区
-  REPO_URL: https://github.com/coolsnowwolf/lede  # OpenWRT的下载链接。精确到那个分支：url -b openwrt-版本号
+  # OpenWRT的下载链接。精确到那个分支：url -b openwrt-版本号
+  REPO_URL: git clone https://github.com/openwrt/openwrt.git
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   # =============================
