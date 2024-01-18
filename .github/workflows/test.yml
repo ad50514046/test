@@ -20,13 +20,13 @@ env:  # 设定环境变量区
   # =============================
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
-  UPLOAD_RELEASE: false  # 是否发布false或true
+  UPLOAD_RELEASE: false
   # 注：以下已设定内容不会改代码的不要改！！！
-  FEEDS_CONF: feeds.conf.default  # 调用仓库中的文件。把OpenWRT的feeds.conf.default文件导入仓库。
-  CONFIG_FILE: .config  # 调用仓库中的文件。把openwrt的.config导入仓库。
-  DIY_P1_SH: diy-part1.sh  # 调用仓库中的diy-part1.sh。注：此文件为linux的shell语句
-  DIY_P2_SH: diy-part2.sh  # 调用仓库中的diy-part2.sh。注：此文件为linux的shell语句
-  TZ: Asia/Shanghai  # 时区参数为上海
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: .config
+  DIY_P1_SH: diy-part1.sh
+  DIY_P2_SH: diy-part2.sh
+  TZ: Asia/Shanghai
 
 jobs:
   build:
@@ -38,11 +38,11 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive  # 设置为无人托管状态
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc  # 删除相关文件夹
-        sudo -E apt-get -qq update  # 升级apt
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)  # 安装服务器中所有的apt
-        sudo -E apt-get -qq autoremove --purge  # 删除没用的依赖
-        sudo -E apt-get -qq clean  # 清除依赖包
+        #sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc  # 删除相关文件夹
+        #sudo -E apt-get -qq update  # 升级apt
+        #sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)  # 安装服务器中所有的apt
+        #sudo -E apt-get -qq autoremove --purge  # 删除没用的依赖
+        #sudo -E apt-get -qq clean  # 清除依赖包
         sudo timedatectl set-timezone "$TZ"  # 设置时区调用TZ变量
         sudo mkdir -p /workdir # 根目录下创建workdir文件夹
         sudo chown $USER:$GROUPS /workdir  # 修改workdir的用户和用户组
