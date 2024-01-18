@@ -44,7 +44,7 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD  # 查询硬盘大小
-        $GET_CLONE_URL openwrt # 下载openwrt到openwrt文件夹中
+        #$GET_CLONE_URL openwrt # 下载openwrt到openwrt文件夹中
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt  # 创建软连接
         #[ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default # 复制feeds.conf.default文件
         
