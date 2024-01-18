@@ -14,3 +14,8 @@ jobs:
           touch ./aaa/abcd
           echo '你好' > ./aaa/abcd
           cat ./aaa/abcd
+      - name: 上传文件夹
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/aaa
+
