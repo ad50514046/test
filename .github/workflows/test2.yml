@@ -13,4 +13,4 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-       ${{ server.README.md }}
+       ${{ README.md }}
