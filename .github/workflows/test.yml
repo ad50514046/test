@@ -12,5 +12,6 @@ jobs:
       
       - name: 创建文件
         run: |
-          mkdir aaaa
-          
+          mkdir aaa
+          touch ./aaa/abcd
+          cat ./aaa/abcd
