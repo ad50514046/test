@@ -1,35 +1,75 @@
-name: Build OpenWrt
+# 原作者：P3TERX。项目是：Actions-OpenWrt。感谢原作者
+# 此项目作用。1、添加中文名注释。2、删除一些我用不到的功能。3、由于代码比较早，有些已经无法使用。
+
+name: Build OpenWrt  # Build OpenWrt可以变跟自己喜欢的。
 
 on: workflow_dispatch
 
-env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .config
-  DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
+env:  # 设定环境变量区
+  REPO_URL: https://github.com/coolsnowwolf/lede  # OpenWRT的下载链接。精确到那个分支：url -b openwrt-版本号
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
-  TZ: Asia/Shanghai
+  # 注：以下已设定内容不会改代码的不要改！！！
+  FEEDS_CONF: feeds.conf.default  # 调用仓库中的文件。把OpenWRT的feeds.conf.default文件导入仓库。
+  CONFIG_FILE: .config  # 调用仓库中的文件。把openwrt的.config导入仓库。
+  DIY_P1_SH: diy-part1.sh  # 调用仓库中的diy-part1.sh。注：此文件为linux的shell语句
+  DIY_P2_SH: diy-part2.sh  # 调用仓库中的diy-part2.sh。注：此文件为linux的shell语句
+  TZ: Asia/Shanghai  # 时区参数为上海
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # 指定系统版本
     steps:
-    - uses: actions/checkout@main
-    - name: 系统配置升级
+    - uses: actions/checkout@main  # 指定系统用户
+    
+    - name: 系统配置&依赖升级
       env:
-        DEBIAN_FRONTEND: noninteractive
+        DEBIAN_FRONTEND: noninteractive  # 设置为无人托管状态
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
-        sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-latest)
-        sudo -E apt-get -qq autoremove --purge
-        sudo -E apt-get -qq clean
-        sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /workdir
-        sudo chown $USER:$GROUPS /workdir
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc  # 删除相关文件夹
+        sudo -E apt-get -qq update  # 升级apt
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-latest)  # 安装服务器中所有的apt
+        sudo -E apt-get -qq autoremove --purge  # 删除没用的依赖
+        sudo -E apt-get -qq clean  # 清除依赖包
+        sudo timedatectl set-timezone "$TZ"  # 设置时区调用TZ变量
+        sudo mkdir -p /workdir # 根目录下创建workdir文件夹
+        sudo chown $USER:$GROUPS /workdir  # 修改workdir的用户和用户组
+        
+    - name: 下载OpenWRT
+      working-directory: /workdir
+      run: |
+        df -hT $PWD  # 查询硬盘大小
+        git clone $REPO_URL openwrt  # 下载openwrt到openwrt文件夹中
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt  # 创建软连接
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default # 复制feeds.conf.default文件
+        
+    - name: 执行DIY1文件
+      run: |
+        chmod +x $DIY_P1_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P1_SH
+        
+    - name: Openwrt文件升级和安装
+      run: |
+        cd openwrt && ./scripts/feeds update -a  # 文件升级
+        cd openwrt && ./scripts/feeds install -a  # 文件安装
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config # 复制.config文件
+
+    - name: 执行DIY2文件
+      run: |
+        [ -e files ] && mv files openwrt/files  # ？？？？？？？？？？
+        chmod +x $DIY_P2_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P2_SH
+
+    - name: 下载Openwrt的package
+      run: |
+        cd openwrt
+        make defconfig
+        make download -j8
+        # 以下两句，检查下载完整性
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
