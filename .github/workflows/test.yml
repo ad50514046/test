@@ -57,6 +57,5 @@ jobs:
 
     - name: Load custom feeds
       run: |
-        #[ -e files ] && mv files openwrt/files  # ？？？？？？？？？？
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default # 复制feeds.conf.default文件
         
