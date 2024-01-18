@@ -39,10 +39,10 @@ jobs:
         DEBIAN_FRONTEND: noninteractive  # 设置为无人托管状态
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc  # 删除相关文件夹
-        #sudo -E apt-get -qq update  # 升级apt
-        #sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-latest)  # 安装服务器中所有的apt
-        #sudo -E apt-get -qq autoremove --purge  # 删除没用的依赖
-        #sudo -E apt-get -qq clean  # 清除依赖包
+        sudo -E apt-get -qq update  # 升级apt
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-latest)  # 安装服务器中所有的apt
+        sudo -E apt-get -qq autoremove --purge  # 删除没用的依赖
+        sudo -E apt-get -qq clean  # 清除依赖包
         sudo timedatectl set-timezone "$TZ"  # 设置时区调用TZ变量
         sudo mkdir -p /workdir # 根目录下创建workdir文件夹
         sudo chown $USER:$GROUPS /workdir  # 修改workdir的用户和用户组
@@ -57,6 +57,6 @@ jobs:
 
     - name: Load custom feeds
       run: |
-        [ -e files ] && mv files openwrt/files  # ？？？？？？？？？？
-        #[ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default # 复制feeds.conf.default文件
+        #[ -e files ] && mv files openwrt/files  # ？？？？？？？？？？
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default # 复制feeds.conf.default文件
         
