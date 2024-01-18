@@ -46,10 +46,10 @@ jobs:
         df -hT $PWD  # 查询硬盘大小
         git clone $REPO_URL openwrt  # 下载openwrt到openwrt文件夹中
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt  # 创建软连接
-        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default # 复制feeds.conf.default文件
         
     - name: 执行DIY1文件
       run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default # 复制feeds.conf.default文件
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
@@ -76,7 +76,7 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
-    - name: Compile the firmware
+    - name: 编译Openwrt
       id: compile
       run: |
         cd openwrt
