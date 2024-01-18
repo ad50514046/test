@@ -3,7 +3,14 @@
 
 name: Build OpenWrt  # Build OpenWrt可以变跟自己喜欢的。
 
-on: workflow_dispatch
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
 
 env:  # 设定环境变量区
   # OpenWRT的下载链接。精确到那个分支：url -b openwrt-版本号
