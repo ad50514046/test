@@ -1,6 +1,8 @@
 
 name: test
 on: workflow_dispatch
+env:
+  AAA = "你好"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -8,4 +10,4 @@ jobs:
       - uses: actions/checkout@main
       
       - name: 说声你好
-        run: echo Hello, world!
+        run: echo $AAA
