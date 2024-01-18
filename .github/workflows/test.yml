@@ -30,7 +30,7 @@ env:  # 设定环境变量区
 
 jobs:
   build:
-    runs-on: ubuntu-latest # 指定系统版本
+    runs-on: ubuntu-20.04 # 指定系统版本
     steps:
     - uses: actions/checkout@main  # 指定系统用户
     
@@ -40,7 +40,7 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc  # 删除相关文件夹
         sudo -E apt-get -qq update  # 升级apt
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-latest)  # 安装服务器中所有的apt
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)  # 安装服务器中所有的apt
         sudo -E apt-get -qq autoremove --purge  # 删除没用的依赖
         sudo -E apt-get -qq clean  # 清除依赖包
         sudo timedatectl set-timezone "$TZ"  # 设置时区调用TZ变量
