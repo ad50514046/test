@@ -31,7 +31,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive  # 设置为无人托管状态
       run: |
-        #sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc  # 删除相关文件夹
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc  # 删除相关文件夹
         #sudo -E apt-get -qq update  # 升级apt
         #sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-latest)  # 安装服务器中所有的apt
         #sudo -E apt-get -qq autoremove --purge  # 删除没用的依赖
@@ -46,5 +46,5 @@ jobs:
         df -hT $PWD  # 查询硬盘大小
         $GET_CLONE_URL openwrt # 下载openwrt到openwrt文件夹中
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt  # 创建软连接
-        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default # 复制feeds.conf.default文件
+        #[ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default # 复制feeds.conf.default文件
         
