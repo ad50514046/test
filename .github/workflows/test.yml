@@ -41,7 +41,7 @@ jobs:
         #sudo chown $USER:$GROUPS /workdir  # 修改workdir的用户和用户组
       
     - name: 下载OpenWRT
-      working-directory: /workdir
+      #working-directory: /workdir
       run: |
         #df -hT $PWD  # 查询硬盘大小
         git clone https://github.com/openwrt/openwrt.git openwr
