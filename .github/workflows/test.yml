@@ -1,8 +1,9 @@
 
 name: test
 on: workflow_dispatch
+
 env:
-  AAA = "你好"
+  AAA: "你好"
 jobs:
   build:
     runs-on: ubuntu-latest
