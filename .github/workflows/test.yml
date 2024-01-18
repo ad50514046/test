@@ -56,8 +56,9 @@ jobs:
         
     - name: Openwrt文件升级和安装
       run: |
-        cd openwrt && ./scripts/feeds update -a  # 文件升级
-        cd openwrt && ./scripts/feeds install -a  # 文件安装
+        cd openwrt 
+        ./scripts/feeds update -a  # 文件升级
+        ./scripts/feeds install -a  # 文件安装
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config # 复制.config文件
 
     - name: 执行DIY2文件
